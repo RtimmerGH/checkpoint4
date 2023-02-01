@@ -1,13 +1,45 @@
 const express = require("express");
+const {
+  hashPassword,
+  verifyPassword,
+  verifyToken,
+  verifyAdmin,
+  replaceReqParamIdByPayloadSub,
+} = require("./middleware/auth");
 
 const router = express.Router();
 
-const itemControllers = require("./controllers/itemControllers");
+const userControllers = require("./controllers/userControllers");
+const pokemonControllers = require("./controllers/pokemonControllers");
+const fightControllers = require("./controllers/fightControllers");
+const teamControllers = require("./controllers/teamControllers");
+const defteamControllers = require("./controllers/defteamControllers");
 
-router.get("/items", itemControllers.browse);
-router.get("/items/:id", itemControllers.read);
-router.put("/items/:id", itemControllers.edit);
-router.post("/items", itemControllers.add);
-router.delete("/items/:id", itemControllers.destroy);
+// public routes
+router.get("/pokemons", pokemonControllers.browsePokemon);
+router.get("/pokemon-teams", pokemonControllers.browseTeam);
+router.get("/pokemon-defteams", pokemonControllers.browseDefteam);
+router.post("/users", hashPassword, userControllers.add);
+router.get("/fights", fightControllers.browse);
+router.get("/teams", teamControllers.browse);
+router.get("/defteams", defteamControllers.browse);
+
+router.post(
+  "/login",
+  userControllers.getUserByEmailWithPasswordAndPassToNext,
+  verifyPassword
+);
+
+// Not public routes
+router.use(verifyToken, verifyAdmin); // authentication wall : verifyToken is activated for each route after this line
+
+router.post("/fights", fightControllers.add);
+router.post("/teams", teamControllers.add);
+router.post("/defteams", defteamControllers.add);
+router.get("/reconnect", replaceReqParamIdByPayloadSub, userControllers.read);
+router.get("/users", userControllers.browse);
+router.get("/users/:id", userControllers.read);
+router.put("/users/:id", userControllers.edit);
+router.delete("/users/:id", userControllers.destroy);
 
 module.exports = router;

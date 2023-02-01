@@ -1,3 +1,4 @@
+const axios = require("axios");
 const models = require("../models");
 
 const browse = (req, res) => {
@@ -82,10 +83,23 @@ const destroy = (req, res) => {
     });
 };
 
+const browsePokemon = (req, res) => {
+  axios
+    .get("https://pokebuildapi.fr/api/v1/random/team")
+    .then((response) => {
+      res.send(response.data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   edit,
   add,
   destroy,
+  browsePokemon,
 };
