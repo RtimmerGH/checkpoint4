@@ -1,10 +1,22 @@
 import { Link } from "react-router-dom";
-import { React } from "react";
+import { React, useState } from "react";
+import Login from "@components/Login";
+import Register from "@components/Register";
 // import { AuthContext } from "../context/AuthContext";
 
 export default function Header() {
   // const navigate = useNavigate();
   // const { userToken } = useContext(AuthContext);
+  const [loginModal, setLoginModal] = useState(false);
+  const [registerModal, setRegisterModal] = useState(false);
+
+  const handleChange = () => {
+    setLoginModal(true);
+  };
+
+  const handleRegister = () => {
+    setRegisterModal(true);
+  };
 
   return (
     <header className="bg-red-600 h-[10vh]">
@@ -23,18 +35,29 @@ export default function Header() {
           <div className="ml-5 ">
             <button
               type="button"
+              onClick={handleChange}
               className="inline-block bg-yellow-400 py-2 px-2 m-1 border border-spacing-1   rounded-md text-base font-medium text-blue-800  hover:bg-opacity-75"
             >
               Se connecter
             </button>
             <button
               type="button"
+              onClick={handleRegister}
               className="inline-block bg-yellow-400 py-2 px-2 border border-spacing-1 rounded-md text-base font-medium text-blue-800 hover:bg-indigo-50"
             >
               S'inscrire
             </button>
           </div>
         </div>
+        {loginModal && (
+          <Login loginModal={loginModal} setLoginModal={setLoginModal} />
+        )}
+        {registerModal && (
+          <Register
+            registerModal={registerModal}
+            setRegisterModal={setRegisterModal}
+          />
+        )}
       </nav>
     </header>
   );

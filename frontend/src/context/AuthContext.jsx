@@ -5,7 +5,10 @@ export const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
   const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
-  const [userInfos, setUserInfos] = useState({});
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userRole, setUserRole] = useState("");
+  const [userId, setUserId] = useState("");
 
   const setUserTokenCookie = (token) => {
     if (token) {
@@ -24,12 +27,18 @@ export function AuthContextProvider({ children }) {
 
   const value = useMemo(
     () => ({
+      userId,
+      setUserId,
+      userName,
+      setUserName,
       setUserTokenCookie,
       userToken,
-      userInfos,
-      setUserInfos,
+      userEmail,
+      setUserEmail,
+      userRole,
+      setUserRole,
     }),
-    [userToken, userInfos]
+    [userToken, userName, userEmail, userRole, userId]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
