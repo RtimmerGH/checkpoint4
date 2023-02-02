@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Home() {
   return (
     <div className="bg-white h-[80vh]">
@@ -12,13 +14,28 @@ export default function Home() {
         </div>
       </div>
       <div className="h-[20vh] flex justify-center items-center border">
-        <p>Créer son équipe</p>
+        <Link
+          to="/create-team"
+          className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Créer l'équipe
+        </Link>
       </div>
       <div className="h-[20vh] flex justify-center items-center border">
-        <p>Attaquer</p>
+        <Link
+          to="/attack"
+          className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Attaquer
+        </Link>
       </div>
       <div className="h-[20vh] flex justify-center items-center border">
-        <p>Défendre</p>
+        <Link
+          to="/scores"
+          className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Scores
+        </Link>
       </div>
     </div>
   );

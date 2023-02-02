@@ -1,10 +1,32 @@
 const axios = require("axios");
 
+// const browsePokemon = (req, res) => {
+//   axios
+//     .get("https://pokebuildapi.fr/api/v1/random/team")
+//     .then((response) => {
+//       res.send(response.data);
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       res.sendStatus(500);
+//     });
+// };
+
 const browsePokemon = (req, res) => {
+  let resp = [];
   axios
     .get("https://pokebuildapi.fr/api/v1/random/team")
     .then((response) => {
-      res.send(response.data);
+      axios
+        .get("https://pokebuildapi.fr/api/v1/random/team")
+        .then((response2) => {
+          resp = [...response.data, ...response2.data];
+          res.send(resp);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
     })
     .catch((err) => {
       console.error(err);

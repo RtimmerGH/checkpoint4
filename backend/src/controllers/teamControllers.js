@@ -5,12 +5,36 @@ const add = (req, res) => {
     res.sendStatus(403);
   } else {
     models.team
-      .insert(req.body)
+      .findAllForUser(req.body.userId)
       .then(([result]) => {
-        if (result.affectedRows === 0) {
-          res.sendStatus(404);
+        if (result[0] == null) {
+          models.team
+            .insert(req.body)
+            .then(([result2]) => {
+              if (result2.affectedRows === 0) {
+                res.sendStatus(404);
+              } else {
+                res.sendStatus(204);
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              res.sendStatus(500);
+            });
         } else {
-          res.sendStatus(204);
+          models.team
+            .update(req.body)
+            .then(([result2]) => {
+              if (result2.affectedRows === 0) {
+                res.sendStatus(404);
+              } else {
+                res.sendStatus(204);
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              res.sendStatus(500);
+            });
         }
       })
       .catch((err) => {
@@ -25,6 +49,22 @@ const browse = (req, res) => {
     .findAll()
     .then(([rows]) => {
       res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const read = (req, res) => {
+  models.team
+    .findAllForUser(req.params.id)
+    .then(([rows]) => {
+      if (rows[0] == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows[0]);
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -80,6 +120,7 @@ const browseTutoComments = (req, res) => {
 
 module.exports = {
   add,
+  read,
   browse,
   readAllForUser,
   browseTutoRating,

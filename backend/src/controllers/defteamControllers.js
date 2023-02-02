@@ -1,16 +1,60 @@
 const models = require("../models");
 
+// const add = (req, res) => {
+//   if (parseInt(req.payload.sub, 10) !== req.body.userId) {
+//     res.sendStatus(403);
+//   } else {
+//     models.def_team
+//       .insert(req.body)
+//       .then(([result]) => {
+//         if (result.affectedRows === 0) {
+//           res.sendStatus(404);
+//         } else {
+//           res.sendStatus(204);
+//         }
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//         res.sendStatus(500);
+//       });
+//   }
+// };
+
 const add = (req, res) => {
   if (parseInt(req.payload.sub, 10) !== req.body.userId) {
     res.sendStatus(403);
   } else {
-    models.def_team
-      .insert(req.body)
+    models.defteam
+      .findAllForUser(req.body.userId)
       .then(([result]) => {
-        if (result.affectedRows === 0) {
-          res.sendStatus(404);
+        if (result[0] == null) {
+          models.defteam
+            .insert(req.body)
+            .then(([result2]) => {
+              if (result2.affectedRows === 0) {
+                res.sendStatus(404);
+              } else {
+                res.sendStatus(204);
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              res.sendStatus(500);
+            });
         } else {
-          res.sendStatus(204);
+          models.defteam
+            .update(req.body)
+            .then(([result2]) => {
+              if (result2.affectedRows === 0) {
+                res.sendStatus(404);
+              } else {
+                res.sendStatus(204);
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              res.sendStatus(500);
+            });
         }
       })
       .catch((err) => {

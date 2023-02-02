@@ -22,6 +22,7 @@ router.get("/pokemon-defteams", pokemonControllers.browseDefteam);
 router.post("/users", hashPassword, userControllers.add);
 router.get("/fights", fightControllers.browse);
 router.get("/teams", teamControllers.browse);
+router.get("/teams/:id", teamControllers.read);
 router.get("/defteams", defteamControllers.browse);
 
 router.post(

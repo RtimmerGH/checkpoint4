@@ -21,7 +21,8 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${Cookies.get(
     "userToken"
   )}`;
-  const { setUserInfos } = useContext(AuthContext);
+  const { setUserName, setUserEmail, setUserRole, setUserId } =
+    useContext(AuthContext);
 
   useEffect(() => {
     const token = Cookies.get("userToken");
@@ -29,12 +30,10 @@ function App() {
       axios
         .get(`/reconnect`)
         .then((response) => {
-          setUserInfos({
-            userId: response.data.id,
-            userName: response.data.name,
-            userEmail: response.data.email,
-            isAdmin: response.data.admin,
-          });
+          setUserName(response.data.name);
+          setUserEmail(response.data.email);
+          setUserRole(response.data.admin);
+          setUserId(response.data.id);
         })
         .catch((error) => {
           console.error(error);
