@@ -26,11 +26,14 @@ VALUES
 
 DROP TABLE IF EXISTS `fight`;
  CREATE TABLE fight (
-    attack_user_id INTEGER REFERENCES user (id) ON DELETE CASCADE,
-    def_user_id INTEGER REFERENCES user (id) ON DELETE CASCADE,
-    winner_id INTEGER REFERENCES user (id) ON DELETE CASCADE,    
+    id int primary key NOT NULL AUTO_INCREMENT,
+    attack_user_id INTEGER ,
+    def_user_id INTEGER ,
+    winner_id INTEGER,    
     fight_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (attack_user_id, def_user_id,winner_id)
+    FOREIGN KEY (attack_user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (def_user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (winner_id) REFERENCES user(id) ON DELETE CASCADE
 ); 
 
 DROP TABLE IF EXISTS `team`;

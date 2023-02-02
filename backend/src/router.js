@@ -18,7 +18,13 @@ const defteamControllers = require("./controllers/defteamControllers");
 // public routes
 router.get("/pokemons", pokemonControllers.browsePokemon);
 router.get("/pokemon-teams", pokemonControllers.browseTeam);
-router.get("/pokemon-defteams", pokemonControllers.browseDefteam);
+router.post("/pokemon-teams", pokemonControllers.browseTeam);
+router.get(
+  "/pokemon-defteams/:id",
+  teamControllers.readRandomUser,
+  teamControllers.readDef,
+  pokemonControllers.browseDefTeam
+);
 router.post("/users", hashPassword, userControllers.add);
 router.get("/fights", fightControllers.browse);
 router.get("/teams", teamControllers.browse);

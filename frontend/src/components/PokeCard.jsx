@@ -35,10 +35,10 @@ export default function PokeCard({ pokeInfo }) {
               <GiFist color="red" /> {pokeInfo.stats.attack}
             </p>
             <p className=" flex items-center h-fit">
-              <GiShield color="red" /> {pokeInfo.stats.attack}
+              <GiShield color="red" /> {pokeInfo.stats.defense}
             </p>
             <p className=" flex items-center h-fit">
-              <GiStopwatch color="red" /> {pokeInfo.stats.attack}
+              <GiStopwatch color="red" /> {pokeInfo.stats.speed}
             </p>
           </div>
         </div>

@@ -98,11 +98,12 @@ export default function CreateTeam() {
           teamOffer.map((pokemon) => {
             return (
               <button
+                key={pokemon.id}
                 type="button"
                 onClick={() => pokeClick(pokemon.id)}
                 className=" mx-auto relative w-[24%] h-[30%] max-h-[30%]"
               >
-                <PokeCard key={pokemon.id} pokeInfo={pokemon} />
+                <PokeCard pokeInfo={pokemon} />
                 <div className="absolute h-[20%] w-[20%] top-[30%] left-[40%] text-4xl text-red-600 ">
                   {teamSelect.indexOf(pokemon.id) !== -1 && (
                     <p>{teamSelect.indexOf(pokemon.id) + 1}</p>

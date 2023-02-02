@@ -46,6 +46,12 @@ class teamManager extends AbstractManager {
       [userId]
     );
   }
+
+  findRandomUser() {
+    return this.connection.query(
+      `select user_id,user.name from ${this.table} inner join user on user_id = user.id order by RAND() LIMIT 2 `
+    );
+  }
 }
 
 module.exports = teamManager;

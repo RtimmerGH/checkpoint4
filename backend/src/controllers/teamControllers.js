@@ -56,6 +56,21 @@ const browse = (req, res) => {
     });
 };
 
+async function movePokeIntoArray(pokeList, id) {
+  const response = {};
+  response.userId = id;
+  response.poke = [];
+  // const promises = [];
+  for (let i = 0; i < 8; i += 1) {
+    response.poke.push(pokeList[`poke${(i + 1).toString()}`]);
+    // console.log(response);
+  }
+  return Promise.all(response.poke).then(() => {
+    return response;
+    // eslint-disable-next-line prettier/prettier
+        });      
+}
+
 const read = (req, res) => {
   models.team
     .findAllForUser(req.params.id)
@@ -63,7 +78,9 @@ const read = (req, res) => {
       if (rows[0] == null) {
         res.sendStatus(404);
       } else {
-        res.send(rows[0]);
+        movePokeIntoArray(rows[0], req.params.id).then((response) => {
+          res.send(response);
+        });
       }
     })
     .catch((err) => {
@@ -72,15 +89,17 @@ const read = (req, res) => {
     });
 };
 
-const readAllForUser = (req, res) => {
-  const userId = parseInt(req.params.userId, 10);
-  models.user_journey
-    .findAllForUser(userId)
+const readDef = (req, res, next) => {
+  models.team
+    .findAllForUser(req.params.id)
     .then(([rows]) => {
       if (rows[0] == null) {
         res.sendStatus(404);
       } else {
-        res.send(rows);
+        movePokeIntoArray(rows[0], req.params.id).then((response) => {
+          req.body.poke = response.poke;
+          next();
+        });
       }
     })
     .catch((err) => {
@@ -89,28 +108,22 @@ const readAllForUser = (req, res) => {
     });
 };
 
-const browseTutoRating = (req, res) => {
-  const promises = req.modifiedTuto.map((e) => {
-    return models.user_journey.findAverageRatingForTuto(e.id).then(([rows]) => {
-      e.rating = rows[0].rating;
-      return e;
-    });
-  });
-  Promise.all(promises)
-    .then((modifiedTuto) => {
-      res.send(modifiedTuto);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
-const browseTutoComments = (req, res) => {
-  models.user_journey
-    .findAllCommentsForTuto(req.params.id)
+const readRandomUser = (req, res, next) => {
+  const userId = parseInt(req.params.id, 10);
+  models.team
+    .findRandomUser()
     .then(([rows]) => {
-      res.send(rows);
+      if (rows[0] == null) {
+        res.sendStatus(404);
+      } else if (rows[0].user_id !== userId) {
+        req.params.id = rows[0].user_id;
+        req.body.name = rows[0].name;
+        next();
+      } else {
+        req.params.id = rows[1].user_id;
+        req.body.name = rows[1].name;
+        next();
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -121,8 +134,7 @@ const browseTutoComments = (req, res) => {
 module.exports = {
   add,
   read,
+  readDef,
   browse,
-  readAllForUser,
-  browseTutoRating,
-  browseTutoComments,
+  readRandomUser,
 };

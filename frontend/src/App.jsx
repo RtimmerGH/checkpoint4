@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  matchPath,
+  useLocation,
+  BrowserRouter as Router,
+} from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 import Header from "@components/Header";
@@ -13,6 +19,24 @@ import Scores from "@pages/Scores";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "./context/AuthContext";
+
+function MainContent() {
+  const location = useLocation();
+  const attack = matchPath({ path: "/attack" }, location.pathname);
+
+  return (
+    <>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/create-team" element={<CreateTeam />} />
+        <Route path="/attack" element={<Attack />} />
+        <Route path="/defense" element={<Defense />} />
+        <Route path="/scores" element={<Scores />} />
+      </Routes>
+      {attack ? "" : <Footer />}
+    </>
+  );
+}
 
 function App() {
   const { VITE_BACKEND_URL } = import.meta.env;
@@ -44,14 +68,7 @@ function App() {
     <div className="App h-[100vh]">
       <Router>
         <Header />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/create-team" element={<CreateTeam />} />
-          <Route path="/attack" element={<Attack />} />
-          <Route path="/defense" element={<Defense />} />
-          <Route path="/scores" element={<Scores />} />
-        </Routes>
-        <Footer />
+        <MainContent />
       </Router>
     </div>
   );

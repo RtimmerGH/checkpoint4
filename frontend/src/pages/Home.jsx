@@ -13,7 +13,7 @@ export default function Home() {
           </h1>
         </div>
       </div>
-      <div className="h-[20vh] flex justify-center items-center border">
+      <div className="h-[20vh] flex justify-center items-center border  bg-center bg-cover bg-no-repeat bg-[url('/image/pokeban2.jpg')]">
         <Link
           to="/create-team"
           className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -21,7 +21,7 @@ export default function Home() {
           Créer l'équipe
         </Link>
       </div>
-      <div className="h-[20vh] flex justify-center items-center border">
+      <div className="h-[20vh] flex justify-center items-center border  bg-center bg-cover bg-no-repeat bg-[url('/image/pokeban3.png')]">
         <Link
           to="/attack"
           className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -29,7 +29,7 @@ export default function Home() {
           Attaquer
         </Link>
       </div>
-      <div className="h-[20vh] flex justify-center items-center border">
+      <div className="h-[20vh] flex justify-center items-center border bg-center bg-cover bg-no-repeat bg-[url('/image/pokeban4.jpg')]">
         <Link
           to="/scores"
           className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

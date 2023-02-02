@@ -1,17 +1,5 @@
 const axios = require("axios");
 
-// const browsePokemon = (req, res) => {
-//   axios
-//     .get("https://pokebuildapi.fr/api/v1/random/team")
-//     .then((response) => {
-//       res.send(response.data);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.sendStatus(500);
-//     });
-// };
-
 const browsePokemon = (req, res) => {
   let resp = [];
   axios
@@ -38,7 +26,7 @@ async function getPokeTeamInfo(req, res, quant, check) {
   const pokeTeamId = [];
   if (
     (check === 1 && req.body.poke.length === 8) ||
-    (check === 2 && req.body.poke.length === 5)
+    (check === 2 && (req.body.poke.length === 5 || req.body.poke.length === 8))
   ) {
     const promises = [];
     for (let i = 0; i < quant; i += 1) {
@@ -70,9 +58,15 @@ const browseTeam = (req, res) => {
     });
 };
 
-const browseDefteam = (req, res) => {
+const browseDefTeam = (req, res) => {
   getPokeTeamInfo(req, res, 5, 2)
-    .then((pokeTeamId) => res.send(pokeTeamId))
+    .then((pokeTeamId) => {
+      const pokeDefTeam = {};
+      pokeDefTeam.userId = req.params.id;
+      pokeDefTeam.team = [...pokeTeamId];
+      pokeDefTeam.name = req.body.name;
+      res.send(pokeDefTeam);
+    })
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
@@ -82,5 +76,5 @@ const browseDefteam = (req, res) => {
 module.exports = {
   browsePokemon,
   browseTeam,
-  browseDefteam,
+  browseDefTeam,
 };
