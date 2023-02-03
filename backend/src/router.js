@@ -16,6 +16,7 @@ const teamControllers = require("./controllers/teamControllers");
 const defteamControllers = require("./controllers/defteamControllers");
 
 // public routes
+router.get("/scores", fightControllers.ranking);
 router.get("/pokemons", pokemonControllers.browsePokemon);
 router.get("/pokemon-teams", pokemonControllers.browseTeam);
 router.post("/pokemon-teams", pokemonControllers.browseTeam);

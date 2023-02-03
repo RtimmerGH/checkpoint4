@@ -32,7 +32,20 @@ const browse = (req, res) => {
     });
 };
 
+const ranking = (req, res) => {
+  models.fight
+    .findRanking()
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   add,
   browse,
+  ranking,
 };

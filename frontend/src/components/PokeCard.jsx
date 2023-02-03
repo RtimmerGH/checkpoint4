@@ -6,7 +6,7 @@ export default function PokeCard({ pokeInfo }) {
     <div className="w-[100%] h-[100%]">
       <div className="bg-white h-[100%] rounded overflow-hidden shadow-lg">
         <div
-          className=" flex justify-between bg-yellow-500  w-[100%] h-[80%] border-b bg-center bg-cover bg-no-repeat"
+          className=" flex justify-between bg-yellow-500  w-[100%] h-[80%] border-b bg-center bg-contain bg-no-repeat"
           style={{
             backgroundImage: `url(${pokeInfo.image})`,
           }}
