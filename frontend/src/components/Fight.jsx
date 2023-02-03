@@ -24,11 +24,11 @@ export default function Fight({
       if (pokemon1.stats.speed > pokemon2.stats.speed) {
         pokemon2.stats.HP -= pokemon1.stats.attack;
         if (pokemon2.stats.HP > 0) {
-          pokemon2.stats.HP -= pokemon1.stats.attack;
+          pokemon1.stats.HP -= pokemon2.stats.attack;
         }
       } else pokemon1.stats.HP -= pokemon2.stats.attack;
       if (pokemon1.stats.HP > 0) {
-        pokemon1.stats.HP -= pokemon2.stats.attack;
+        pokemon2.stats.HP -= pokemon1.stats.attack;
       }
     }
     if (pokemon2.stats.HP > 0) {
@@ -106,7 +106,7 @@ export default function Fight({
       <div className="flex justify-end">
         <button
           type="button"
-          className="text-red-500 p-2 border border-blue-700 bg-yellow-400 rounded font-normal"
+          className="text-red-500 p-2 m-3 border border-blue-700 bg-yellow-400 rounded font-normal"
           onClick={() => {
             setStartFight(false);
           }}

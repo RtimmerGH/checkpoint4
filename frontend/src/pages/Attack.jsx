@@ -124,11 +124,12 @@ export default function Attack() {
           teamOffer.map((pokemon) => {
             return (
               <button
+                key={pokemon.id}
                 type="button"
                 onClick={() => pokeClick(pokemon)}
                 className=" mx-auto relative w-[24%] h-[49%] max-h-[49%]"
               >
-                <PokeCard key={pokemon.id} pokeInfo={pokemon} />
+                <PokeCard pokeInfo={pokemon} />
                 <div className="absolute h-[20%] w-[20%] top-[30%] left-[40%] text-4xl text-red-600 ">
                   {teamSelect.indexOf(pokemon.id) !== -1 && (
                     <p>{teamSelect.indexOf(pokemon.id) + 1}</p>
@@ -173,10 +174,11 @@ export default function Attack() {
           defTeam.map((pokemon) => {
             return (
               <button
+                key={pokemon.id}
                 type="button"
                 className=" mx-auto relative w-[24%] h-[49%] max-h-[49%]"
               >
-                <PokeCard key={pokemon.id} pokeInfo={pokemon} />
+                <PokeCard pokeInfo={pokemon} />
                 <div className="absolute h-[20%] w-[20%] top-[30%] left-[40%] text-4xl text-red-600 ">
                   {teamSelect.indexOf(pokemon.id) !== -1 && (
                     <p>{teamSelect.indexOf(pokemon.id) + 1}</p>
