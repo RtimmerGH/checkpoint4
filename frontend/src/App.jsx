@@ -6,7 +6,6 @@ import {
   useLocation,
   BrowserRouter as Router,
 } from "react-router-dom";
-import { useContext, useEffect } from "react";
 
 import Header from "@components/Header";
 import Footer from "@components/Footer";
@@ -15,10 +14,6 @@ import CreateTeam from "@pages/CreateTeam";
 import Attack from "@pages/Attack";
 import Defense from "@pages/Defense";
 import Scores from "@pages/Scores";
-
-import axios from "axios";
-import Cookies from "js-cookie";
-import { AuthContext } from "./context/AuthContext";
 
 function MainContent() {
   const location = useLocation();
@@ -39,31 +34,31 @@ function MainContent() {
 }
 
 function App() {
-  const { VITE_BACKEND_URL } = import.meta.env;
+  // const { VITE_BACKEND_URL } = import.meta.env;
 
-  axios.defaults.baseURL = VITE_BACKEND_URL;
-  axios.defaults.headers.common.Authorization = `Bearer ${Cookies.get(
-    "userToken"
-  )}`;
-  const { setUserName, setUserEmail, setUserRole, setUserId } =
-    useContext(AuthContext);
+  // axios.defaults.baseURL = VITE_BACKEND_URL;
+  // axios.defaults.headers.common.Authorization = `Bearer ${Cookies.get(
+  //   "userToken"
+  // )}`;
+  // const { setUserName, setUserEmail, setUserRole, setUserId } =
+  //   useContext(AuthContext);
 
-  useEffect(() => {
-    const token = Cookies.get("userToken");
-    if (token) {
-      axios
-        .get(`/reconnect`)
-        .then((response) => {
-          setUserName(response.data.name);
-          setUserEmail(response.data.email);
-          setUserRole(response.data.admin);
-          setUserId(response.data.id);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = Cookies.get("userToken");
+  //   if (token) {
+  //     axios
+  //       .get(`/reconnect`)
+  //       .then((response) => {
+  //         setUserName(response.data.name);
+  //         setUserEmail(response.data.email);
+  //         setUserRole(response.data.admin);
+  //         setUserId(response.data.id);
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   }
+  // }, []);
   return (
     <div className="App h-[100vh]">
       <Router>

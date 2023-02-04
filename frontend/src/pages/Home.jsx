@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Home() {
+  const { userId, setLoginModal } = useContext(AuthContext);
+
   return (
     <div className="bg-white h-[80vh]">
       <div
@@ -14,20 +18,40 @@ export default function Home() {
         </div>
       </div>
       <div className="h-[20vh] flex justify-center items-center border  bg-center bg-cover bg-no-repeat bg-[url('/image/pokeban2.jpg')]">
-        <Link
-          to="/create-team"
-          className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Créer l'équipe
-        </Link>
+        {userId ? (
+          <Link
+            to="/create-team"
+            className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Créer l'équipe
+          </Link>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setLoginModal(true)}
+            className="inline-block bg-yellow-400 py-2 px-2 m-1 border border-spacing-1   rounded-md text-base font-medium text-blue-800  hover:bg-opacity-75"
+          >
+            Créer l'équipe
+          </button>
+        )}
       </div>
       <div className="h-[20vh] flex justify-center items-center border  bg-center bg-cover bg-no-repeat bg-[url('/image/pokeban3.png')]">
-        <Link
-          to="/attack"
-          className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Attaquer
-        </Link>
+        {userId ? (
+          <Link
+            to="/attack"
+            className="inline-flex items-center px-6 py-3 border border-spacing-1 text-base font-medium rounded-md shadow-sm text-blue-800 bg-yellow-400 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Combattre
+          </Link>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setLoginModal(true)}
+            className="inline-block bg-yellow-400 py-2 px-2 m-1 border border-spacing-1   rounded-md text-base font-medium text-blue-800  hover:bg-opacity-75"
+          >
+            Combattre
+          </button>
+        )}
       </div>
       <div className="h-[20vh] flex justify-center items-center border bg-center bg-cover bg-no-repeat bg-[url('/image/pokeban4.jpg')]">
         <Link

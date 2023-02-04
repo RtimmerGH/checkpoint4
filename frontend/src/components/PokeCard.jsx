@@ -4,9 +4,9 @@ import { GiHearts, GiFist, GiShield, GiStopwatch } from "react-icons/gi";
 export default function PokeCard({ pokeInfo }) {
   return (
     <div className="w-[100%] h-[100%]">
-      <div className="bg-white h-[100%] rounded overflow-hidden shadow-lg">
+      <div className="h-[100%]  border border-yellow-600 rounded overflow-hidden shadow-lg">
         <div
-          className=" flex justify-between bg-yellow-500  w-[100%] h-[80%] border-b bg-center bg-contain bg-no-repeat"
+          className=" flex justify-between  w-[100%] h-[80%] border-b bg-center bg-contain bg-no-repeat"
           style={{
             backgroundImage: `url(${pokeInfo.image})`,
           }}
@@ -27,7 +27,7 @@ export default function PokeCard({ pokeInfo }) {
               />
             )}
           </div>
-          <div className=" flex flex-col content-center m-1 border-b bg-center bg-cover bg-no-repeat">
+          <div className="text-xs sm:text-sm md:text-base flex flex-col content-center m-1 border-b bg-center bg-cover bg-no-repeat">
             <p className=" flex items-center h-fit">
               <GiHearts color="red" /> {pokeInfo.stats.HP}
             </p>

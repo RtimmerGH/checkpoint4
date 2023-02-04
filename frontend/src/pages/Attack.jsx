@@ -43,36 +43,47 @@ export default function Attack() {
   };
 
   const getTeamInfo = async () => {
-    const poke = [...team.poke];
-    try {
-      const response = await axios.post(
-        `/pokemon-teams`,
-        {
-          poke,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+    if (team.poke) {
+      const poke = [...team.poke];
+      try {
+        const response = await axios.post(
+          `/pokemon-teams`,
+          {
+            poke,
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      if (response.data) {
-        setTeamOffer(response.data);
+        if (response.data) {
+          setTeamOffer(response.data);
+        }
+      } catch (error) {
+        console.error("probleme lors de la requete");
       }
-    } catch (error) {
-      console.error("probleme lors de la requete");
     }
   };
 
   const pokeClick = (pokemon) => {
-    if (teamSelect.length < 5 && teamSelect.indexOf(pokemon.id) === -1) {
-      const pokeId = pokemon.id;
+    if (teamSelect.indexOf(pokemon.id) === -1) {
+      if (teamSelect.length < 5 && teamSelect.indexOf(pokemon.id) === -1) {
+        const pokeId = pokemon.id;
+        const teamSelectCopy = teamSelect;
+        teamSelectCopy.push(pokeId);
+        const attackTeamCopy = attackTeam;
+        attackTeamCopy.push(pokemon);
+        setTeamSelect(teamSelectCopy);
+        setAttackTeam(attackTeamCopy);
+        setRenderSelect(!renderSelect);
+      }
+    } else {
       const teamSelectCopy = teamSelect;
-      teamSelectCopy.push(pokeId);
       const attackTeamCopy = attackTeam;
-      attackTeamCopy.push(pokemon);
-
+      attackTeamCopy.splice(teamSelectCopy.indexOf(pokemon.id), 1);
+      teamSelectCopy.splice(teamSelectCopy.indexOf(pokemon.id), 1);
       setTeamSelect(teamSelectCopy);
       setAttackTeam(attackTeamCopy);
       setRenderSelect(!renderSelect);
@@ -99,27 +110,29 @@ export default function Attack() {
   }, [team.length]);
 
   return (
-    <div className="h-[80vh] bg-white">
+    <div className="h-[80vh] bg-white ">
       <div
-        className="h-[5vh] flex justify-center items-center border bg-center bg-cover bg-no-repeat bg-[url('/image/banniere.png')] "
+        className="h-[6vh] flex justify-center items-center border bg-center bg-cover bg-no-repeat bg-[url('/image/banniere.png')]"
         style={{ textShadow: "1px 2px 3px blue" }}
       >
-        <div>
+        <div className="h-[100%] w-[100%] bg-gray-500 bg-opacity-40 flex justify-center items-center">
           <h1 className="text-base sm:text-xl lg:text-2xl font-extrabold rounded   text-yellow-400 drop-shadow-[1_5px_35px_rgba(2,41,195,0.8)]">
-            Choisis les pokemons que tu veux dans ton équipe
+            Choisis les 5 pokemons que tu veux dans ton équipe
           </h1>
         </div>
       </div>
-      <div className="h-[5vh] flex justify-center items-center border">
-        <button
-          type="button"
-          onClick={handleReset}
-          className="inline-block bg-yellow-400 py-0 sm:py-2 px-2 border border-spacing-1 rounded-md text-base font-medium text-blue-800 hover:bg-indigo-50"
-        >
-          Nouvel ordre
-        </button>
+      <div className="h-[7vh] flex justify-center items-center border bg-contain bg-repeat bg-[url('/image/flash.jpg')]">
+        <div className="h-[100%] w-[100%] flex justify-center items-center border bg-contain bg-repeat bg-[url('/image/pokeball.svg')]">
+          <button
+            type="button"
+            onClick={handleReset}
+            className="inline-block bg-yellow-400 py-2 px-2 border-2 border-double  border-amber-600 rounded-md text-base font-medium text-blue-800 hover:bg-blue-800 hover:text-yellow-400 "
+          >
+            Désélectionner tous les pokemons
+          </button>
+        </div>
       </div>
-      <div className="h-[35vh]  px-1 flex justify-center flex-wrap border">
+      <div className="h-[35vh]  px-1 flex justify-center flex-wrap border bg-blue-500">
         {teamOffer.length > 0 ? (
           teamOffer.map((pokemon) => {
             return (
@@ -127,10 +140,16 @@ export default function Attack() {
                 key={pokemon.id}
                 type="button"
                 onClick={() => pokeClick(pokemon)}
-                className=" mx-auto relative w-[24%] h-[49%] max-h-[49%]"
+                className=" mx-auto relative w-[24%] h-[49%] max-h-[49%] rounded bg-center bg-cover bg-no-repeat bg-[url('/image/flash.png')]"
+                style={{
+                  border: teamSelect.indexOf(pokemon.id) !== -1 && `solid red`,
+                }}
               >
                 <PokeCard pokeInfo={pokemon} />
-                <div className="absolute h-[20%] w-[20%] top-[30%] left-[40%] text-4xl text-red-600 ">
+                <div
+                  className="absolute h-[20%] w-[20%] top-[40%] left-[10%]  text-4xl text-left text-red-600 "
+                  style={{ textShadow: "1px 2px 3px black" }}
+                >
                   {teamSelect.indexOf(pokemon.id) !== -1 && (
                     <p>{teamSelect.indexOf(pokemon.id) + 1}</p>
                   )}
@@ -140,60 +159,63 @@ export default function Attack() {
           })
         ) : (
           <div>
-            <p>Les 5 premiers Pokemons choisis composeront votre équipe</p>
+            <p>Chargement de l'équipe...</p>
           </div>
         )}
       </div>
-      <div className="h-[5vh] flex justify-center items-center border">
-        {!defId ? (
-          <button
-            type="button"
-            onClick={handleValidate}
-            className="inline-block bg-yellow-400 py-0 sm:py-2 px-2 border border-spacing-1 rounded-md text-base font-medium text-blue-800 hover:bg-indigo-50"
-          >
-            Adversaire
-          </button>
-        ) : (
-          <div
-            type="button"
-            className="inline-block bg-yellow-400 py-0 sm:py-2 px-2 border border-spacing-1 rounded-md text-base font-medium text-blue-800 hover:bg-indigo-50"
-          >
-            {defName}
-          </div>
-        )}
-        <button
-          type="button"
-          onClick={() => setStartFight(true)}
-          className="inline-block bg-yellow-400 py-0 sm:py-2 px-2 border border-spacing-1 rounded-md text-base font-medium text-blue-800 hover:bg-indigo-50"
-        >
-          Fight
-        </button>
+      <div className="h-[7vh] flex justify-center items-center border bg-contain bg-repeat bg-[url('/image/flash.jpg')]">
+        <div className="h-[100%] w-[100%] flex justify-center items-center border bg-contain bg-repeat bg-[url('/image/pokeball.svg')]">
+          {!defId ? (
+            <button
+              type="button"
+              onClick={handleValidate}
+              className="inline-block bg-yellow-400 py-2 px-2 mx-2 border-2   border-double  border-amber-600 rounded-md text-base font-medium text-blue-800 hover:bg-blue-800 hover:text-yellow-400"
+            >
+              Chercher un adversaire
+            </button>
+          ) : (
+            <div
+              type="button"
+              className="inline-block bg-yellow-400 py-2 px-2 mx-2 border-2   border-double  border-amber-600 rounded-md text-base font-medium text-blue-800 "
+            >
+              Equipe de {defName}
+            </div>
+          )}
+          {teamSelect.length === 5 && (
+            <button
+              type="button"
+              onClick={() => setStartFight(true)}
+              className="inline-block bg-yellow-400 py-2 px-2 mx-2 border-2   border-double  border-amber-600   rounded-md text-base font-medium text-blue-800 hover:bg-blue-800 hover:text-yellow-400"
+            >
+              Démarrer le combat
+            </button>
+          )}
+        </div>
       </div>
-      <div className="h-[35vh]  px-1 flex justify-center flex-wrap border">
+      <div className="h-[35vh]  px-1 flex justify-center flex-wrap border bg-green-600    ">
         {defTeam.length > 0 ? (
-          defTeam.map((pokemon) => {
+          defTeam.map((pokemon, index) => {
             return (
               <button
                 key={pokemon.id}
                 type="button"
-                className=" mx-auto relative w-[24%] h-[49%] max-h-[49%]"
+                className=" mx-auto relative w-[24%] h-[49%] max-h-[49%] rounded bg-center bg-cover bg-no-repeat bg-[url('/image/flash.png')]"
+                style={{
+                  border: teamSelect.length > index && `solid red`,
+                }}
               >
                 <PokeCard pokeInfo={pokemon} />
-                <div className="absolute h-[20%] w-[20%] top-[30%] left-[40%] text-4xl text-red-600 ">
-                  {teamSelect.indexOf(pokemon.id) !== -1 && (
-                    <p>{teamSelect.indexOf(pokemon.id) + 1}</p>
-                  )}
+                <div
+                  className="absolute h-[20%] w-[20%] top-[40%] left-[10%]  text-4xl text-left text-red-600 "
+                  style={{ textShadow: "1px 2px 3px black" }}
+                >
+                  {teamSelect.length > index && <p>{index + 1}</p>}
                 </div>
               </button>
             );
           })
         ) : (
-          <div>
-            <p>
-              Cliquez sur Adversaire pour voir l'équipe que vous allez affronter
-            </p>
-            <p>Selectionnez ensuite 5 pokemons pour la combattre</p>
-          </div>
+          <div className=" h-[100%] w-[100%] bg-center bg-contain bg-no-repeat bg-[url('/image/silhouette.png')]" />
         )}
       </div>
       {startFight && (

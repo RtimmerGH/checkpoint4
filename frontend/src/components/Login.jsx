@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
-export default function Login({ loginModal, setLoginModal }) {
+export default function Login({ loginModal, setLoginModal, setRegisterModal }) {
   if (!loginModal) return null;
 
   const {
@@ -36,6 +36,11 @@ export default function Login({ loginModal, setLoginModal }) {
     } catch (error) {
       console.error("user not found");
     }
+  };
+
+  const handleChange = () => {
+    setLoginModal(false);
+    setRegisterModal(true);
   };
 
   return (
@@ -110,6 +115,18 @@ export default function Login({ loginModal, setLoginModal }) {
           Connexion
         </button>
       </form>
+      <div className="text-sm font-medium text-black text-center flex flex-col items-center mt-2 ">
+        Pas de compte ?{" "}
+        <div
+          onClick={handleChange}
+          onKeyDown={handleChange}
+          role="button"
+          tabIndex={0}
+          className="text-blue-700 hover:underline w-fit"
+        >
+          S'enregistrer
+        </div>
+      </div>
     </div>
   );
 }

@@ -6,8 +6,9 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function Header() {
   // const navigate = useNavigate();
-  const { userToken, userName, setUserTokenCookie } = useContext(AuthContext);
-  const [loginModal, setLoginModal] = useState(false);
+  const { userToken, userName, setUserTokenCookie, loginModal, setLoginModal } =
+    useContext(AuthContext);
+  // const [loginModal, setLoginModal] = useState(false);
   const [registerModal, setRegisterModal] = useState(false);
 
   const handleChange = () => {
@@ -70,7 +71,11 @@ export default function Header() {
           </div>
         </div>
         {loginModal && (
-          <Login loginModal={loginModal} setLoginModal={setLoginModal} />
+          <Login
+            loginModal={loginModal}
+            setLoginModal={setLoginModal}
+            setRegisterModal={setRegisterModal}
+          />
         )}
         {registerModal && (
           <Register
