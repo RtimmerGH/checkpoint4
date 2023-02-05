@@ -110,7 +110,6 @@ export default function Attack() {
   }, [team.length]);
 
   if (!userId || !userPoke1) {
-    console.log("userId: ",userId," userPoke1: ",userPoke1);
     return (
       <div className="h-[80vh] bg-white">
         <div
