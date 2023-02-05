@@ -10,8 +10,12 @@ export function AuthContextProvider({ children }) {
   const [userEmail, setUserEmail] = useState("");
   const [userRole, setUserRole] = useState("");
   const [userId, setUserId] = useState(null);
+  const [userScore, setUserScore] = useState(0);
+  const [userFightsDone, setUserFightsDone] = useState(0);
+  const [userPoke1, setUserPoke1] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [loginModal, setLoginModal] = useState(false);
+  const [teamRefresh, setTeamRefresh] = useState(false);
 
   const { VITE_BACKEND_URL } = import.meta.env;
 
@@ -30,13 +34,16 @@ export function AuthContextProvider({ children }) {
           setUserEmail(response.data.email);
           setUserRole(response.data.admin);
           setUserId(response.data.id);
+          setUserScore(response.data.score);
+          setUserFightsDone(response.data.fights_done);
+          setUserPoke1(response.data.poke1);
           setIsLoading(false);
         })
         .catch((error) => {
           console.error(error);
         });
     } else setIsLoading(false);
-  }, []);
+  }, [teamRefresh]);
 
   const setUserTokenCookie = (token) => {
     if (token) {
@@ -54,6 +61,9 @@ export function AuthContextProvider({ children }) {
       setUserEmail("");
       setUserRole(0);
       setUserId(null);
+      setUserScore(0);
+      setUserFightsDone(0);
+      setUserPoke1(null);
     }
   };
 
@@ -71,8 +81,27 @@ export function AuthContextProvider({ children }) {
       setUserRole,
       loginModal,
       setLoginModal,
+      userScore,
+      setUserScore,
+      userFightsDone,
+      setUserFightsDone,
+      userPoke1,
+      setUserPoke1,
+      teamRefresh,
+      setTeamRefresh,
     }),
-    [userToken, userName, userEmail, userRole, userId, loginModal]
+    [
+      userToken,
+      userName,
+      userEmail,
+      userRole,
+      userId,
+      loginModal,
+      userScore,
+      userFightsDone,
+      userPoke1,
+      teamRefresh,
+    ]
   );
 
   return (

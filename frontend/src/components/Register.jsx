@@ -79,17 +79,25 @@ export default function Register({ registerModal, setRegisterModal }) {
         items-center    "
     >
       <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        onKeyDown={null}
+        tabIndex={-1}
+        role="button"
         className="        
         w-full h-full
-        shadow  md:w-1/2 md:auto p-10  bg-[rgba(196,42,42,255)] flex flex-col  justify-start border-2 border-black   items-center rounded-3xl"
+        shadow  md:w-1/2 md:auto p-10  bg-[rgba(196,42,42,255)] flex flex-col  justify-start border-2 border-black cursor-default  items-center rounded-3xl"
       >
         <div className="flex m-1 justify-around item w-[100%] ">
-          <h5 className="text-xl font-medium text-gray-800 ">
-            Créer un compte
-          </h5>
+          <img
+            src="image/createaccount.png"
+            alt=" titre créer un compte"
+            className=" max-w-[60%]"
+          />
           <button
             type="button"
-            className="text-red-500 px-2 border border-blue-700 bg-gray-700 font-normal rounded "
+            className="text-red-500 px-2 max-h-10  border border-blue-700 bg-gray-700 font-normal rounded "
             onClick={() => {
               setRegisterModal(false);
             }}

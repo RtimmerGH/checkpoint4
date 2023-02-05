@@ -7,7 +7,8 @@ import { GiShield } from "react-icons/gi";
 import { AuthContext } from "../context/AuthContext";
 
 export default function CreateTeam() {
-  const { userId } = useContext(AuthContext);
+  const { userId, teamRefresh, setTeamRefresh, userPoke1 } =
+    useContext(AuthContext);
   const [teamOffer, setTeamOffer] = useState([]);
   const [teamSelect, setTeamSelect] = useState([]);
   const [renderSelect, setRenderSelect] = useState(false);
@@ -46,6 +47,9 @@ export default function CreateTeam() {
 
         if (response) {
           setValidated(true);
+          if (!userPoke1) {
+            setTeamRefresh(!teamRefresh);
+          }
         }
       } catch (error) {
         console.error("probleme lors de la requete");
@@ -74,6 +78,30 @@ export default function CreateTeam() {
     setTeamSelect([]);
     setRenderSelect(!renderSelect);
   };
+
+  if (!userId) {
+    return (
+      <div className="h-[80vh] bg-white">
+        <div
+          className="h-[10vh] flex justify-center items-center border bg-center bg-cover bg-no-repeat bg-[url('/image/banniere.png')] "
+          style={{ textShadow: "1px 2px 3px blue" }}
+        >
+          <div className="h-[100%] w-[100%] bg-gray-500 bg-opacity-40 flex justify-center items-center">
+            <h1 className="text-xs sm:text-xl lg:text-2xl font-extrabold rounded   text-yellow-400 drop-shadow-[1_5px_35px_rgba(2,41,195,0.8)]">
+              Choisis les pokemons que tu veux dans ton équipe <br /> Les 5
+              premiers sélectionnés seront aussi dans ton équipe de défense
+            </h1>
+          </div>
+        </div>
+        <div className="h-[5vh] flex justify-center items-center border ">
+          <h1 className="text-xs sm:text-xl lg:text-2xl font-extrabold rounded   text-black drop-shadow-[1_5px_35px_rgba(2,41,195,0.8)]">
+            Connectez vous pour créer une équipe
+          </h1>
+        </div>
+        <div className="h-[65vh]  px-1 flex justify-center items-center flex-wrap border bg-center bg-cover bg-no-repeat bg-[url('/image/grass.jpg')]" />
+      </div>
+    );
+  }
 
   return (
     <div className="h-[80vh] bg-white">

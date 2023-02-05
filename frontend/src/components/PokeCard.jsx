@@ -4,7 +4,7 @@ import { GiHearts, GiFist, GiShield, GiStopwatch } from "react-icons/gi";
 export default function PokeCard({ pokeInfo }) {
   return (
     <div className="w-[100%] h-[100%]">
-      <div className="h-[100%]  border border-yellow-600 rounded overflow-hidden shadow-lg">
+      <div className="h-[100%] rounded overflow-hidden shadow-lg">
         <div
           className=" flex justify-between  w-[100%] h-[80%] border-b bg-center bg-contain bg-no-repeat"
           style={{

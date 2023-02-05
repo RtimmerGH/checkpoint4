@@ -6,7 +6,7 @@ import Fight from "@components/Fight";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Attack() {
-  const { userId } = useContext(AuthContext);
+  const { userId, userPoke1 } = useContext(AuthContext);
   const [team, setTeam] = useState([]);
   const [defTeam, setDefTeam] = useState([]);
   const [defId, setDefId] = useState();
@@ -108,6 +108,30 @@ export default function Attack() {
       getTeamInfo();
     }
   }, [team.length]);
+
+  if (!userId || !userPoke1) {
+    console.log("userId: ",userId," userPoke1: ",userPoke1);
+    return (
+      <div className="h-[80vh] bg-white">
+        <div
+          className="h-[10vh] flex justify-center items-center border bg-center bg-cover bg-no-repeat bg-[url('/image/banniere.png')] "
+          style={{ textShadow: "1px 2px 3px blue" }}
+        >
+          <div className="h-[100%] w-[100%] bg-gray-500 bg-opacity-40 flex justify-center items-center">
+            <h1 className="text-xs sm:text-xl lg:text-2xl font-extrabold rounded   text-yellow-400 drop-shadow-[1_5px_35px_rgba(2,41,195,0.8)]">
+              Choisis les pokemons que tu veux dans ton équipe
+            </h1>
+          </div>
+        </div>
+        <div className="h-[5vh] flex justify-center items-center border ">
+          <h1 className="text-xs sm:text-xl lg:text-2xl font-extrabold rounded   text-black drop-shadow-[1_5px_35px_rgba(2,41,195,0.8)]">
+            Pour combattre vous devez être connecté et avoir une équipe
+          </h1>
+        </div>
+        <div className="h-[75vh]  px-1 flex justify-center items-center flex-wrap border bg-center bg-cover bg-no-repeat bg-[url('/image/grass.jpg')]" />
+      </div>
+    );
+  }
 
   return (
     <div className="h-[80vh] bg-white ">
