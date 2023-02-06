@@ -42,12 +42,12 @@ export default function Header() {
               <button
                 type="button"
                 onClick={handleChange}
-                className="inline-block bg-yellow-400 py-2 px-2 m-1 border border-spacing-1 border-blue-800   rounded-md text-base font-medium text-blue-800  hover:bg-opacity-75"
+                className="inline-block bg-yellow-400 py-2 px-2 m-1 border border-spacing-1 border-blue-800   rounded-md text-sm md:text-base  font-medium text-blue-800  hover:bg-opacity-75"
               >
                 Se connecter
               </button>
             ) : (
-              <div className="inline-block bg-yellow-400 py-2 px-2 m-1 border border-spacing-1  border-blue-800 rounded-md text-base font-medium text-blue-800  hover:bg-opacity-75">
+              <div className="inline-block bg-yellow-400 py-2 px-2 m-1 border border-spacing-1  border-blue-800 rounded-md text-sm md:text-base font-medium text-blue-800  hover:bg-opacity-75">
                 {userName}
               </div>
             )}
@@ -55,7 +55,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={handleRegister}
-                className="inline-block bg-yellow-400 py-2 px-2 border border-spacing-1border-blue-800 rounded-md text-base font-medium text-blue-800 hover:bg-indigo-50"
+                className="inline-block bg-yellow-400 py-2 px-2 border border-spacing-1border-blue-800 rounded-md text-sm md:text-base font-medium text-blue-800 hover:bg-indigo-50"
               >
                 S'inscrire
               </button>
@@ -63,7 +63,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={handleDisconnect}
-                className="inline-block bg-yellow-400 py-2 px-2 border border-spacing-1 border-blue-800 rounded-md text-base font-medium text-blue-800 hover:bg-indigo-50"
+                className="inline-block bg-yellow-400 py-2 px-2 border border-spacing-1 border-blue-800 rounded-md text-sm md:text-base font-medium text-blue-800 hover:bg-indigo-50"
               >
                 Déconnecter
               </button>

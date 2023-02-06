@@ -1,5 +1,5 @@
 import React from "react";
-import { GiHearts, GiFist, GiShield, GiStopwatch } from "react-icons/gi";
+import { GiHearts, GiFist, GiStopwatch } from "react-icons/gi";
 
 export default function PokeCard({ pokeInfo }) {
   return (
@@ -35,16 +35,13 @@ export default function PokeCard({ pokeInfo }) {
               <GiFist color="red" /> {pokeInfo.stats.attack}
             </p>
             <p className=" flex items-center h-fit">
-              <GiShield color="red" /> {pokeInfo.stats.defense}
-            </p>
-            <p className=" flex items-center h-fit">
               <GiStopwatch color="red" /> {pokeInfo.stats.speed}
             </p>
           </div>
         </div>
         <div className="border-b">
           <div className="text-center">
-            <p className="text-sm font-medium text-gray-800 leading-none">
+            <p className="text-xs sm:text-sm lg:text-base xl:text-xl font-bold  text-gray-800 leading-none">
               {pokeInfo.name}
             </p>
           </div>
