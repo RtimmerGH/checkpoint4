@@ -45,9 +45,7 @@ export default function Fight({ defTeam, attackTeam, userId, defId }) {
     if (pokeAttackAttack && pokeAttack.stats.HP < 1) {
       const logsTemp = logs;
       logsTemp.push(
-        `${attackTeam[turn].name} contre ${defTeam[turn].name}, Vainqueur: ${
-          defTeam[turn].name
-        } => Score ${attackScore} - ${defScore + 1}`
+        `${attackTeam[turn].name} contre ${defTeam[turn].name}, Vainqueur: ${defTeam[turn].name}`
       );
       const fightLogsTemp = fightLogs;
       fightLogsTemp.push(`${attackTeam[turn].name} est vaincu !`);
@@ -80,9 +78,7 @@ export default function Fight({ defTeam, attackTeam, userId, defId }) {
     if (pokeDefAttack && pokeDef.stats.HP < 1) {
       const logsTemp = logs;
       logsTemp.push(
-        `${attackTeam[turn].name} contre ${defTeam[turn].name}, Vainqueur: ${
-          attackTeam[turn].name
-        } => Score ${attackScore + 1} - ${defScore}`
+        `${attackTeam[turn].name} contre ${defTeam[turn].name}, Vainqueur: ${attackTeam[turn].name}`
       );
       const fightLogsTemp = fightLogs;
       fightLogsTemp.push(`${defTeam[turn].name} est vaincu !`);
@@ -165,11 +161,47 @@ export default function Fight({ defTeam, attackTeam, userId, defId }) {
             px-5            
             align-between rounded-3xl"
       >
-        <div className="flex justify-center  my-2 h-[5vh]">
+        <div className="w-[100%] h-[30vh] bg-[rgba(188,188,188,255)] mt-6 flex justify-center items-center border-2 border-black  rounded-3xl ">
+          <div className="h-[95%] w-[95%] relative flex bg-bottom rounded-3xl border-2 border-black bg-cover bg-no-repeat bg-[url('/image/arena2.png')]">
+            {attackTeam[turn] ? (
+              <div
+                className={`relative h-[100%] w-[100%] ${
+                  pokeAttackAttack && "border-4 border-green-500 rounded-3xl "
+                } `}
+              >
+                <PokeCard pokeInfo={attackTeam[turn]} />
+                {pokeAttack && pokeAttack.stats.HP < 1 && (
+                  <div className="h-[100%] w-[100%] top-0 left-0 absolute bg-center bg-contain bg-no-repeat bg-[url('/image/cross.svg')]" />
+                )}
+              </div>
+            ) : (
+              <PokeCard pokeInfo={attackTeam[0]} />
+            )}
+
+            <div className="flex items-center">
+              <h1 className="font-bold">VS</h1>
+            </div>
+            {defTeam[turn] ? (
+              <div
+                className={` relative h-[100%] w-[100%] ${
+                  pokeDefAttack && "border-4 border-green-500 rounded-3xl "
+                }`}
+              >
+                <PokeCard pokeInfo={defTeam[turn]} />
+                {pokeDef && pokeDef.stats.HP < 1 && (
+                  <div className="h-[100%] w-[100%] top-0 left-0 absolute bg-center bg-contain bg-no-repeat bg-[url('/image/cross.svg')]" />
+                )}
+              </div>
+            ) : (
+              <PokeCard pokeInfo={defTeam[0]} />
+            )}
+          </div>
+        </div>
+        <div className="flex justify-center mt-1 h-[4vh]">
           {turn < 5 && !winnerId ? (
             <button
               type="button"
-              className="inline-flex items-center px-4 py-2 border-2 border-double border-black text-base font-medium rounded-md shadow-sm text-black bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+              className="inline-flex items-center px-4 h-[4vh] border-2 border-double border-black text-base font-medium rounded-md shadow-sm text-black bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
               onClick={() => {
                 fight(pokeAttack, pokeDef);
               }}
@@ -179,7 +211,7 @@ export default function Fight({ defTeam, attackTeam, userId, defId }) {
           ) : (
             <button
               type="button"
-              className="inline-flex items-center px-4 py-1 my-1 border-2 border-double border-black text-base font-medium rounded-md shadow-sm text-black bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+              className="inline-flex items-center px-4 h-[4vh] border-2 border-double border-black text-base font-medium rounded-md shadow-sm text-black bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
               onClick={() => {
                 handleResult();
               }}
@@ -188,38 +220,15 @@ export default function Fight({ defTeam, attackTeam, userId, defId }) {
             </button>
           )}
         </div>
-        <div className="w-[100%] h-[30vh] bg-[rgba(188,188,188,255)] flex justify-center items-center border-2 border-black  rounded-3xl ">
-          <div className="h-[95%] w-[95%] relative flex bg-bottom rounded-3xl border-2 border-black bg-cover bg-no-repeat bg-[url('/image/arena2.png')]">
-            {attackTeam[turn] ? (
-              <PokeCard pokeInfo={attackTeam[turn]} />
-            ) : (
-              <PokeCard pokeInfo={attackTeam[0]} />
-            )}
-            {pokeAttack && pokeAttack.stats.HP < 1 && (
-              <div className="h-[100%] w-[40%] absolute top-0 left-0 bg-contain bg-no-repeat bg-[url('/image/cross.svg')]" />
-            )}
-            <div className="flex items-center">
-              <h1>VS</h1>
-            </div>
-            {defTeam[turn] ? (
-              <PokeCard pokeInfo={defTeam[turn]} />
-            ) : (
-              <PokeCard pokeInfo={defTeam[0]} />
-            )}
-            {pokeDef && pokeDef.stats.HP < 1 && (
-              <div className="h-[100%] w-[40%] absolute top-0 right-0 bg-contain bg-no-repeat bg-[url('/image/cross.svg')]" />
-            )}
-          </div>
-        </div>
-
-        <div className="h-[28vh] text-xs sm:text-base md:text-lg">
-          <h2>combat info</h2>
-          <div className="w-[100%] h-[25vh] p-2 bg-[rgba(188,188,188,255)] flex justify-center items-center border-2 border-black  rounded-3xl ">
+        <div className="h-[25vh] text-xs sm:text-base md:text-lg">
+          <h2 className="h-[3vh]">combat info</h2>
+          <div className="w-[100%] h-[22vh] p-2 bg-[rgba(188,188,188,255)] flex justify-center items-center border-2 border-black  rounded-3xl ">
             <div className="h-[100%] w-[100%] overflow-auto bg-[rgba(194,217,173,255)] border border-black rounded-2xl">
               {fightLogs.length > 0 &&
-                fightLogs.map((fightLog) => {
+                fightLogs.map((fightLog, index) => {
                   return (
-                    <div className=" block m-1 text-gray-800 ">
+                    // eslint-disable-next-line react/no-array-index-key
+                    <div key={index} className=" block m-1 text-gray-800 ">
                       <p>{fightLog}</p>
                     </div>
                   );
@@ -227,10 +236,9 @@ export default function Fight({ defTeam, attackTeam, userId, defId }) {
             </div>
           </div>
         </div>
-
-        <div className="h-[28vh] w-[100%] flex flex-col text-xs sm:text-base md:text-lg  ">
-          <h2>Résultats</h2>
-          <div className="w-[100%] h-[25vh] p-2 bg-[rgba(188,188,188,255)] flex justify-center items-center border-2 border-black  rounded-3xl ">
+        <div className="h-[23vh] w-[100%] flex flex-col text-xs sm:text-base md:text-lg  ">
+          <h2 className="h-[3vh]">Résultats</h2>
+          <div className="w-[100%] h-[20vh] p-2 bg-[rgba(188,188,188,255)] flex justify-center items-center border-2 border-black  rounded-3xl ">
             <div className="h-[100%] w-[100%] overflow-auto bg-[rgba(194,217,173,255)] border border-black rounded-2xl">
               {logs.length > 0 &&
                 logs.map((log) => {
@@ -240,6 +248,19 @@ export default function Fight({ defTeam, attackTeam, userId, defId }) {
                     </div>
                   );
                 })}
+            </div>
+          </div>
+        </div>
+        <div className="h-[5vh] mt-1 text-xs sm:text-base md:text-lg flex justify-center items-center">
+          <div className="w-auto h-[100%] p-1 bg-[rgba(188,188,188,255)] flex justify-center items-center border-2 border-black  rounded-xl   ">
+            <div className="h-[100%] w-[100%] px-2 min-w-fit overflow-auto bg-[rgba(194,217,173,255)] border border-black rounded-xl flex justify-center items-center">
+              <p className="h-[100%] w-[100%]">{attackScore}</p>
+            </div>
+          </div>
+          -
+          <div className="w-auto h-[100%] p-1 bg-[rgba(188,188,188,255)] flex justify-center items-center border-2 border-black  rounded-xl ">
+            <div className="h-[100%] w-[100%] px-2 min-w-fit overflow-auto bg-[rgba(194,217,173,255)] border border-black rounded-xl flex justify-center items-center">
+              <p className="h-[100%] w-[100%] ">{defScore}</p>
             </div>
           </div>
         </div>
@@ -257,7 +278,7 @@ export default function Fight({ defTeam, attackTeam, userId, defId }) {
         {(defScore > 2 || attackScore > 2) && (
           <button
             type="button"
-            className="inline-flex items-center px-4 py-1 my-1 border-2 border-double border-black text-base font-medium rounded-md shadow-sm text-black bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+            className="inline-flex items-center text-center px-4 py-1 my-1 border-2 border-double border-black text-base font-medium rounded-md shadow-sm text-black bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
             onClick={() => {
               handleResult();
             }}

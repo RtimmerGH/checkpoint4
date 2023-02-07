@@ -1,5 +1,24 @@
 const axios = require("axios");
 
+async function comparePokeLists(pokeList1, pokeList2) {
+  let response = false;
+  for (let i = 0; i < pokeList1.length; i += 1) {
+    if (response) {
+      break;
+    }
+    for (let j = 0; j < pokeList2.length; j += 1) {
+      if (pokeList1[i].id === pokeList2[j].id) {
+        response = true;
+        break;
+      }
+    }
+  }
+
+  return Promise.resolve(response).then(() => {
+    return response;
+  });
+}
+
 const browsePokemon = (req, res) => {
   let resp = [];
   axios
@@ -8,8 +27,14 @@ const browsePokemon = (req, res) => {
       axios
         .get("https://pokebuildapi.fr/api/v1/random/team")
         .then((response2) => {
-          resp = [...response.data, ...response2.data];
-          res.send(resp);
+          comparePokeLists(response.data, response2.data).then((double) => {
+            if (!double) {
+              resp = [...response.data, ...response2.data];
+              res.send(resp);
+            } else {
+              browsePokemon(req, res);
+            }
+          });
         })
         .catch((err) => {
           console.error(err);

@@ -219,7 +219,7 @@ export default function Attack() {
               alt="pokeball"
               className="max-h-[100%] "
             />
-            {!defId ? (
+            {!defId && !defLoading ? (
               <button
                 type="button"
                 onClick={handleValidate}

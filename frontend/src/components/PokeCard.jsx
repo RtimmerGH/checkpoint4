@@ -27,7 +27,7 @@ export default function PokeCard({ pokeInfo }) {
               />
             )}
           </div>
-          <div className="text-xs sm:text-sm md:text-base flex flex-col content-center m-1 border-b bg-center bg-cover bg-no-repeat">
+          <div className="text-xs sm:text-sm md:text-base font-bold flex flex-col content-center m-1 border-b bg-center bg-cover bg-no-repeat">
             <p className=" flex items-center h-fit">
               <GiHearts color="red" /> {pokeInfo.stats.HP}
             </p>

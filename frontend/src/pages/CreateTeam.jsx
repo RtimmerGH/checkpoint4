@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import PokeCard from "@components/PokeCard";
+import Loading from "@components/Loading";
 import { GiShield } from "react-icons/gi";
 
 import { AuthContext } from "../context/AuthContext";
@@ -13,6 +14,7 @@ export default function CreateTeam() {
   const [teamSelect, setTeamSelect] = useState([]);
   const [renderSelect, setRenderSelect] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [teamLoading, setTeamLoading] = useState(false);
 
   const handleSubmit = async () => {
     try {
@@ -22,6 +24,7 @@ export default function CreateTeam() {
         setTeamOffer(response.data);
         setTeamSelect([]);
         setValidated(false);
+        setTeamLoading(false);
       }
     } catch (error) {
       console.error("probleme lors de la requete");
@@ -79,6 +82,12 @@ export default function CreateTeam() {
     setRenderSelect(!renderSelect);
   };
 
+  useEffect(() => {
+    if (teamLoading) {
+      handleSubmit();
+    }
+  }, [teamLoading]);
+
   if (!userId) {
     return (
       <div className="h-[80vh] bg-white">
@@ -124,18 +133,22 @@ export default function CreateTeam() {
               alt="pokeball"
               className="max-h-[100%] "
             />
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="inline-flex items-center max-h-[80%] px-6 py-3 border-2 border-double border-black shadow-sm text-sm md:text-base font-medium rounded-md text-gray-700 hover:bg-gray-600 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-            >
-              {teamOffer.length < 1 ? "Démarrer" : "Relancer le tirage"}
-            </button>
+            {!teamLoading ? (
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="inline-flex items-center max-h-[80%] px-6 py-2 md:py-3 border-2 border-double border-black shadow-sm text-sm md:text-base font-medium rounded-md text-gray-700 hover:bg-gray-600 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+              >
+                {teamOffer.length < 1 ? "Démarrer" : "Relancer le tirage"}
+              </button>
+            ) : (
+              <Loading />
+            )}
             {teamOffer.length > 0 && (
               <button
                 type="button"
                 onClick={handleReset}
-                className="inline-flex items-center max-h-[80%] px-6 py-3 border-2 border-double border-black shadow-sm text-sm md:text-base font-medium rounded-md text-gray-700 hover:bg-gray-600 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                className="inline-flex items-center max-h-[80%] px-6 py-2 md:py-3 border-2 border-double border-black shadow-sm text-sm md:text-base font-medium rounded-md text-gray-700 hover:bg-gray-600 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
               >
                 Désélectionner
               </button>
@@ -283,7 +296,7 @@ export default function CreateTeam() {
                 onClick={handleValidate}
                 className={`inline-flex ${
                   teamSelect.length !== 8 && "hidden"
-                }  items-center max-h-[80%] px-6 py-3 border-2 border-double border-black shadow-sm text-sm md:text-base font-medium rounded-md text-gray-700 hover:bg-gray-600 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
+                }  items-center max-h-[80%] px-6 py-2 md:py-3 border-2 border-double border-black shadow-sm text-sm md:text-base font-medium rounded-md text-gray-700 hover:bg-gray-600 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
               >
                 Valider
               </button>
