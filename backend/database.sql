@@ -50,15 +50,3 @@ CREATE TABLE team (
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
     UNIQUE KEY `user_id` (`user_id`)    
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
-
-DROP TABLE IF EXISTS `def_team`;
-CREATE TABLE def_team (    
-    user_id int NOT NULL,
-    poke1 int NOT NULL,
-    poke2 int NOT NULL,
-    poke3 int NOT NULL,
-    poke4 int NOT NULL,
-    poke5 int NOT NULL,    
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-    UNIQUE KEY `user_id` (`user_id`)    
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;

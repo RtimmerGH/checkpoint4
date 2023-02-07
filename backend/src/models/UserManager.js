@@ -7,7 +7,7 @@ class UserManager extends AbstractManager {
 
   findUser(id) {
     return this.connection.query(
-      `select id, name, email, score, fights_done, admin from  ${this.table} where id = ?`,
+      `select id, name, email, score, fights_done, admin, team.poke1 from ${this.table} left join team on id = team.user_id where id = ?`,
       [id]
     );
   }
@@ -41,10 +41,17 @@ class UserManager extends AbstractManager {
 
   getUserByEmail(email) {
     return this.connection.query(
-      `select name, email, hashedPassword, id, admin from ${this.table} where email = ?`,
+      `select name, email, hashedPassword, id, admin, score, fights_done, team.poke1 from ${this.table} left join team on id = team.user_id where email = ?`,
       [email]
     );
   }
+
+  // getUserByEmail(email) {
+  //   return this.connection.query(
+  //     `select name, email, hashedPassword, id, admin from ${this.table} where email = ?`,
+  //     [email]
+  //   );
+  // }
 }
 
 module.exports = UserManager;
