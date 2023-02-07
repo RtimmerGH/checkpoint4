@@ -22,7 +22,7 @@ class fightManager extends AbstractManager {
 
   findRanking() {
     return this.connection.query(
-      `SELECT user.name,winner_id,COUNT( winner_id) as num FROM ${this.table} inner join user on user.id = fight.winner_id group by winner_id;`
+      `SELECT user.name,winner_id,COUNT( winner_id) as num FROM ${this.table} inner join user on user.id = fight.winner_id group by winner_id order by num DESC;`
     );
   }
 }

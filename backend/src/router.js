@@ -13,7 +13,6 @@ const userControllers = require("./controllers/userControllers");
 const pokemonControllers = require("./controllers/pokemonControllers");
 const fightControllers = require("./controllers/fightControllers");
 const teamControllers = require("./controllers/teamControllers");
-const defteamControllers = require("./controllers/defteamControllers");
 
 // public routes
 router.get("/scores", fightControllers.ranking);
@@ -30,7 +29,6 @@ router.post("/users", hashPassword, userControllers.add);
 router.get("/fights", fightControllers.browse);
 router.get("/teams", teamControllers.browse);
 router.get("/teams/:id", teamControllers.read);
-router.get("/defteams", defteamControllers.browse);
 
 router.post(
   "/login",
@@ -43,7 +41,6 @@ router.use(verifyToken, verifyAdmin); // authentication wall : verifyToken is ac
 
 router.post("/fights", fightControllers.add);
 router.post("/teams", teamControllers.add);
-router.post("/defteams", defteamControllers.add);
 router.get("/reconnect", replaceReqParamIdByPayloadSub, userControllers.read);
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
